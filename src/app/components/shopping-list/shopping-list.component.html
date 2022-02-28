@@ -1,0 +1,6 @@
+<ul class="list-unstyled">
+  <li class="alert" [ngClass]="{ 'alert-info': !item.purchased, 'alert-success': item.purchased}" *ngFor="let item of shoppingList">
+    <p [ngClass]="{'purchased': item.purchased}">{{item.description}}</p>
+    <div *ngIf="!item.purchased"><button class="btn btn-danger btn-sm">X</button></div>
+  </li>
+</ul>

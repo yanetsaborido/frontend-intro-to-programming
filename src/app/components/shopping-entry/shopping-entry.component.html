@@ -1,0 +1,7 @@
+<form [formGroup]="form" (ngSubmit)="addItem()">
+  <div class="form-group">
+    <label for="description">Description</label>
+    <input class="form-control" type="text" id="description" formControlName="description">
+  </div>
+  <button type="submit" class="btn btn-primary">Add This to your List</button>
+</form>
