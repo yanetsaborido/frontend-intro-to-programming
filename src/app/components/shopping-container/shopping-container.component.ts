@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ShoppingListItem } from 'src/app/models/shopping-models';
 
@@ -9,24 +10,20 @@ import { ShoppingListItem } from 'src/app/models/shopping-models';
 export class ShoppingContainerComponent implements OnInit {
 
   lastId = 4;
-  list: ShoppingListItem[] = [
-    { id: '1', description: 'Cheese', purchased: false},
-    { id: '2', description: 'Crackers', purchased: false},
-    { id: '3', description: 'Bread', purchased:true},
-  ];
-  constructor() { }
+  list: ShoppingListItem[] = [];
+
+  constructor(private httpClient:HttpClient) { /* angular constructors are usually empty*/ }
 
   ngOnInit(): void {
+    this.httpClient.get<{ data: ShoppingListItem[] }>('http://localhost:1337/shopping-list').subscribe(response => this.list = response.data)
   }
 
 
   addNewItem(description: string) {
-    const newItem: ShoppingListItem = {
-      id: (this.lastId++).toString(),
-      description,
-      purchased: false
-    }
-    this.list = [newItem, ...this.list]
+
+    this.httpClient.post<ShoppingListItem>('http://localhost:1337/shopping-list', { description }).subscribe(response => {
+      this.list = [response, ...this.list]
+    });
   }
 
 }
