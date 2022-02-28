@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -7,6 +8,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { ShoppingContainerComponent } from './components/shopping-container/shopping-container.component';
 import { ShoppingEntryComponent } from './components/shopping-entry/shopping-entry.component';
 import { ShoppingListComponent } from './components/shopping-list/shopping-list.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 @NgModule({
   declarations: [
@@ -14,12 +17,15 @@ import { ShoppingListComponent } from './components/shopping-list/shopping-list.
     HeaderComponent,
     ShoppingContainerComponent,
     ShoppingListComponent,
-    ShoppingEntryComponent
+    ShoppingEntryComponent,
+    DashboardComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ShoppingListItem } from 'src/app/models/shopping-models';
+import { environment } from 'src/environments/environment'; //never import any other enviroment, just this one
 
 @Component({
   selector: 'app-shopping-container',
@@ -9,24 +11,24 @@ import { ShoppingListItem } from 'src/app/models/shopping-models';
 export class ShoppingContainerComponent implements OnInit {
 
   lastId = 4;
-  list: ShoppingListItem[] = [
-    { id: '1', description: 'Cheese', purchased: false},
-    { id: '2', description: 'Crackers', purchased: false},
-    { id: '3', description: 'Bread', purchased:true},
-  ];
-  constructor() { }
+  list: ShoppingListItem[] = [];
+  constructor(private httpClient:HttpClient) { }
 
   ngOnInit(): void {
+    this.httpClient.get<{data: ShoppingListItem[]}>(`${environment.shoppingApi}shopping-list`).subscribe(response => this.list = response.data);
   }
 
 
   addNewItem(description: string) {
-    const newItem: ShoppingListItem = {
-      id: (this.lastId++).toString(),
-      description,
-      purchased: false
-    }
-    this.list = [newItem, ...this.list]
+    // const newItem: ShoppingListItem = {
+    //   id: (this.lastId++).toString(),
+    //   description,
+    //   purchased: false
+    // }
+    // this.list = [newItem, ...this.list]
+    this.httpClient.post<ShoppingListItem>(`${environment.shoppingApi}shopping-list`, {description}).subscribe(response =>{
+      this.list = [response, ...this.list]
+    });
   }
 
 }
