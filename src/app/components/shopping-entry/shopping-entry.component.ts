@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -7,6 +7,8 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./shopping-entry.component.css']
 })
 export class ShoppingEntryComponent implements OnInit {
+
+  @Output() itemAdded =new EventEmitter<string>();
 
   form = this.formBuilder.group({
     description: ['', [
@@ -25,7 +27,8 @@ export class ShoppingEntryComponent implements OnInit {
 
   addItem() {
     if(this.form.valid) {
-    console.log(this.form.value);
+      const description = this.description?.value;
+      this.itemAdded.emit(description); // use that output we declared and tell the parent.
     } else {
       console.log(this.form.get('description')?.errors);
     }
